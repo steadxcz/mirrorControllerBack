@@ -1,29 +1,29 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.mainMenuHandlers = void 0;
-const markups_1 = require("../markups");
+
+const { mainMenu, tableMenu, bedMenu, acMenu, curtainMenu, mirrorMenu } = require("../markups");
+
 exports.mainMenuHandlers = {
-    attach: (telegramBot) => {
-        telegramBot.onText(/\/start/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, "Main menu options:", markups_1.mainMenu);
-        });
-        telegramBot.onText(/Back🔙/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, "Main menu options:", markups_1.mainMenu);
-        });
-        telegramBot.onText(/Table🖥/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, "Main menu options:", markups_1.tableMenu);
-        });
-        telegramBot.onText(/Bed🛏/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, "Main menu options:", markups_1.bedMenu);
-        });
-        telegramBot.onText(/AC❄️/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, "Main menu options:", markups_1.acMenu);
-        });
-        telegramBot.onText(/Curtain💡/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, "Main menu options:", markups_1.curtainMenu);
-        });
-        telegramBot.onText(/Mirror/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, "Main menu options:", markups_1.mirrorMenu);
-        });
-    }
+  attach: (telegramBot) => {
+    telegramBot.onText(/\/start/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Main menu options:", mainMenu);
+    });
+    telegramBot.onText(/Back🔙/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Main menu options:", mainMenu);
+    });
+    telegramBot.onText(/Table🖥/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Table menu", tableMenu);
+    });
+    telegramBot.onText(/Bed🛏/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Bed menu", bedMenu);
+    });
+    telegramBot.onText(/AC❄️/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "AC menu", acMenu);
+    });
+    telegramBot.onText(/Curtain💡/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Curtain menu", curtainMenu);
+    });
+    telegramBot.onText(/Mirror/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Mirror menu", mirrorMenu);
+    });
+  }
 };

@@ -1,80 +1,79 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AcControllerInstance = void 0;
-const CodeBuilder_1 = require("./CodeBuilder");
-class AcController extends CodeBuilder_1.CodeBuilder {
-    constructor() {
-        super();
-    }
-    acCurrentState = {
-        temp: 24,
-        mode: CodeBuilder_1.MODE.COOLING,
-        power: CodeBuilder_1.POWER.ECO,
-        state: CodeBuilder_1.STATE.OFF,
-        swing: CodeBuilder_1.SWING.NO
+const { CodeBuilder, MODE, POWER, STATE, SWING } = require("./CodeBuilder");
+
+class AcController extends CodeBuilder {
+  constructor() {
+    super();
+    this.acCurrentState = {
+      temp: 24,
+      mode: MODE.COOLING,
+      power: POWER.ECO,
+      state: STATE.OFF,
+      swing: SWING.NO,
     };
-    toggleState() {
-        this.acCurrentState.state = this.acCurrentState.state ? CodeBuilder_1.STATE.ON : CodeBuilder_1.STATE.OFF;
-        super.setState(this.acCurrentState.state);
-        console.log(`state changed to ${CodeBuilder_1.STATE[this.acCurrentState.state]}`);
-        return CodeBuilder_1.STATE[this.acCurrentState.state];
+  }
+
+  toggleState() {
+    this.acCurrentState.state = this.acCurrentState.state ? STATE.ON : STATE.OFF;
+    this.setState(this.acCurrentState.state);
+    console.log(`state changed to ${STATE[this.acCurrentState.state]}`);
+    return STATE[this.acCurrentState.state];
+  }
+
+  switchSwing() {
+    this.acCurrentState.swing =
+      this.acCurrentState.swing === SWING.NO ? SWING.YES : SWING.NO;
+    this.setSwing(this.acCurrentState.swing);
+    return SWING[this.acCurrentState.swing];
+  }
+
+  switchPower() {
+    switch (this.acCurrentState.power) {
+      case POWER.ECO:
+        this.acCurrentState.power = POWER.HIGH;
+        break;
+      case POWER.HIGH:
+        this.acCurrentState.power = POWER.TURBO;
+        break;
+      case POWER.TURBO:
+        this.acCurrentState.power = POWER.ECO;
+        break;
     }
-    switchSwing() {
-        if (this.acCurrentState.swing == CodeBuilder_1.SWING.NO) {
-            this.acCurrentState.swing = CodeBuilder_1.SWING.YES;
-        }
-        else {
-            this.acCurrentState.swing = CodeBuilder_1.SWING.NO;
-        }
-        super.setSwing(this.acCurrentState.swing);
-        return CodeBuilder_1.SWING[this.acCurrentState.swing];
+    this.setPower(this.acCurrentState.power);
+    console.log(`power changed to ${POWER[this.acCurrentState.power]}`);
+    return POWER[this.acCurrentState.power];
+  }
+
+  increaseTemp() {
+    if (this.acCurrentState.temp < 30) {
+      this.acCurrentState.temp++;
+      this.setTemp(this.acCurrentState.temp);
     }
-    switchPower() {
-        switch (this.acCurrentState.power) {
-            case CodeBuilder_1.POWER.ECO:
-                this.acCurrentState.power = CodeBuilder_1.POWER.HIGH;
-                break;
-            case CodeBuilder_1.POWER.HIGH:
-                this.acCurrentState.power = CodeBuilder_1.POWER.TURBO;
-                break;
-            case CodeBuilder_1.POWER.TURBO:
-                this.acCurrentState.power = CodeBuilder_1.POWER.ECO;
-                break;
-        }
-        super.setPower(this.acCurrentState.power);
-        console.log(`power changed to ${CodeBuilder_1.POWER[this.acCurrentState.power]}`);
-        return CodeBuilder_1.POWER[this.acCurrentState.power];
+    return this.acCurrentState.temp;
+  }
+
+  decreaseTemp() {
+    if (this.acCurrentState.temp > 18) {
+      this.acCurrentState.temp--;
+      this.setTemp(this.acCurrentState.temp);
     }
-    increaseTemp() {
-        if (this.acCurrentState.temp < 30) {
-            this.acCurrentState.temp++;
-            super.setTemp(this.acCurrentState.temp);
-        }
-        return this.acCurrentState.temp;
-    }
-    decreaseTemp() {
-        if (this.acCurrentState.temp > 18) {
-            this.acCurrentState.temp--;
-            super.setTemp(this.acCurrentState.temp);
-        }
-        return this.acCurrentState.temp;
-    }
-    changeMode() {
-        if (this.acCurrentState.mode == CodeBuilder_1.MODE.COOLING) {
-            this.acCurrentState.mode = CodeBuilder_1.MODE.HEATING;
-        }
-        else if (this.acCurrentState.mode == CodeBuilder_1.MODE.HEATING) {
-            this.acCurrentState.mode = CodeBuilder_1.MODE.COOLING;
-        }
-        super.setMode(this.acCurrentState.mode);
-        console.log(`mode changed to ${CodeBuilder_1.MODE[this.acCurrentState.mode]}`);
-        return CodeBuilder_1.MODE[this.acCurrentState.mode];
-    }
-    getAcState() {
-        return this.acCurrentState;
-    }
-    generateCode() {
-        return super.getCode();
-    }
+    return this.acCurrentState.temp;
+  }
+
+  changeMode() {
+    this.acCurrentState.mode =
+      this.acCurrentState.mode === MODE.COOLING ? MODE.HEATING : MODE.COOLING;
+    this.setMode(this.acCurrentState.mode);
+    console.log(`mode changed to ${MODE[this.acCurrentState.mode]}`);
+    return MODE[this.acCurrentState.mode];
+  }
+
+  getAcState() {
+    return this.acCurrentState;
+  }
+
+  generateCode() {
+    return this.getCode();
+  }
 }
-exports.AcControllerInstance = new AcController();
+
+module.exports.AcControllerInstance = new AcController();

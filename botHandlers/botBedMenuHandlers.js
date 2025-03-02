@@ -1,44 +1,42 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.bedMenuHandlers = void 0;
-const markups_1 = require("../markups");
+const { bedMenu } = require("../markups");
+
 exports.bedMenuHandlers = {
-    attach: (telegramBot) => {
-        telegramBot.onText(/🟥/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Red`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/🟧/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Orange`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/🟨/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Yellow`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/🟩/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Green`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/🟦/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Blue`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/🟪/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Purple`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/⬜️/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `White`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/⬛️/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Black`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/Rainbow🏳️‍🌈/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Rainbow`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/Night🌙/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Night`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/Bright🔼/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Bright Up`, markups_1.bedMenu);
-        });
-        telegramBot.onText(/Bright🔽/, (msg, match) => {
-            telegramBot.sendMessage(msg.chat.id, `Bright Down`, markups_1.bedMenu);
-        });
-    }
+  attach: (telegramBot) => {
+    telegramBot.onText(/🟥/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Red", bedMenu);
+    });
+    telegramBot.onText(/🟧/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Orange", bedMenu);
+    });
+    telegramBot.onText(/🟨/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Yellow", bedMenu);
+    });
+    telegramBot.onText(/🟩/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Green", bedMenu);
+    });
+    telegramBot.onText(/🟦/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Blue", bedMenu);
+    });
+    telegramBot.onText(/🟪/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Purple", bedMenu);
+    });
+    telegramBot.onText(/⬜️/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "White", bedMenu);
+    });
+    telegramBot.onText(/⬛️/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Black", bedMenu);
+    });
+    telegramBot.onText(/Rainbow🏳️‍🌈/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Rainbow", bedMenu);
+    });
+    telegramBot.onText(/Night🌙/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Night", bedMenu);
+    });
+    telegramBot.onText(/Bright🔼/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Bright Up", bedMenu);
+    });
+    telegramBot.onText(/Bright🔽/, (msg) => {
+      telegramBot.sendMessage(msg.chat.id, "Bright Down", bedMenu);
+    });
+  }
 };
