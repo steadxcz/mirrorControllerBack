@@ -1,12 +1,18 @@
 const { WebSocketServer } = require("ws");
 const MessageParser = require("./MessageParser");
 
+const fs = require('fs');
+const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+const PORT = config.WSPORT;
+
 class SocketServer {
   constructor(port) {
-    this.wsServer = new WebSocketServer({ port });
+    this.wsServer = new WebSocketServer({port});
     this.devicesMap = new Map();
     this.wsList = [];
     this.pinger = null;
+
+    console.log(`WebSocket server started on port ${port}`);
   }
 
   attach() {
@@ -37,4 +43,4 @@ class SocketServer {
   }
 }
 
-module.exports.webSocketServer = new SocketServer(5050);
+module.exports.webSocketServer = new SocketServer(PORT);
