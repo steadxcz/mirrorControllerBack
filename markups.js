@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.mirrorMenu = exports.curtainMenu = exports.acMenu = exports.bedMenu = exports.tableMenu = exports.mainMenu = void 0;
 exports.mainMenu = {
     reply_markup: {
         keyboard: [
@@ -9,6 +6,7 @@ exports.mainMenu = {
         resize_keyboard: false
     }
 };
+
 exports.tableMenu = {
     reply_markup: {
         keyboard: [
@@ -23,6 +21,7 @@ exports.tableMenu = {
         resize_keyboard: true
     }
 };
+
 exports.bedMenu = {
     reply_markup: {
         keyboard: [
@@ -37,6 +36,7 @@ exports.bedMenu = {
         resize_keyboard: true
     }
 };
+
 exports.acMenu = {
     reply_markup: {
         keyboard: [
@@ -47,6 +47,7 @@ exports.acMenu = {
         resize_keyboard: true
     }
 };
+
 exports.curtainMenu = {
     reply_markup: {
         keyboard: [
@@ -57,6 +58,7 @@ exports.curtainMenu = {
         resize_keyboard: true
     }
 };
+
 exports.mirrorMenu = {
     reply_markup: {
         keyboard: [

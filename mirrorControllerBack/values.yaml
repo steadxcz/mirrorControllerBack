@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  repository: localhost:5000/mirrorcontrollerback
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+  requests:
+    memory: "256Mi"  
+    cpu: "250m"
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 5050
+  nodePort: 30080
+
+labels:
+  app: mirrorcontroller
