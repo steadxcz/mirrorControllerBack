@@ -10,7 +10,8 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 echo 'Cloning the Node.js application from GitHub...'
-                git 'https://github.com/steadxcz/mirrorControllerBack.git' // Replace with your repo URL
+                git branch: 'main',
+                    url: 'https://github.com/steadxcz/mirrorControllerBack.git'
             }
         }
 
