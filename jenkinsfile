@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_REGISTRY = "10.42.0.175:5000" // Replace with your local registry address
+        IMAGE_NAME = "nodejs-app"         // Name of your Docker image
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                echo 'Cloning the Node.js application from GitHub...'
+                git 'https://github.com/steadxcz/mirrorControllerBack.git' // Replace with your repo URL
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                echo 'Installing Node.js dependencies...'
+                sh 'npm install' // Ensure npm is installed in your environment
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building the Docker image...'
+                sh '''
+                docker build -t $DOCKER_REGISTRY/$IMAGE_NAME:latest .
+                '''
+            }
+        }
+
+        stage('Push to Local Registry') {
+            steps {
+                echo 'Pushing the Docker image to the local registry...'
+                sh '''
+                docker push $DOCKER_REGISTRY/$IMAGE_NAME:latest
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline execution completed.'
+        }
+        success {
+            echo 'Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check the logs for details.'
+        }
+    }
+}
