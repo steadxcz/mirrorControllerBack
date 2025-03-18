@@ -13,20 +13,14 @@ spec:
     command:
     - cat
     tty: true
-    volumeMounts:
-    - name: docker-sock
-      mountPath: /var/run/docker.sock
-  volumes:
-  - name: docker-sock
-    hostPath:
-      path: /var/run/docker.sock
 """
         }
     }
 
     environment {
+        DOCKER_HOST = "tcp://docker-daemon.jenkins.svc.cluster.local:2375" // Docker daemon service in the cluster
         DOCKER_REGISTRY = "10.42.0.175:5000" // Replace with your local registry address
-        IMAGE_NAME = "nodejs-app"         // Name of your Docker image
+        IMAGE_NAME = "nodejs-app"           // Name of your Docker image
     }
 
     stages {
@@ -52,7 +46,7 @@ spec:
             steps {
                 container('docker') {
                     echo 'Installing Node.js dependencies...'
-                    sh 'npm install' // Ensure npm is installed in your environment
+                    sh 'npm install'
                 }
             }
         }
