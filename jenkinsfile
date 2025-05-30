@@ -19,7 +19,7 @@ spec:
 
     environment {
         DOCKER_HOST = "tcp://docker-daemon.jenkins.svc.cluster.local:2375" // Docker daemon service in the cluster
-        DOCKER_REGISTRY = "10.42.0.133:5000" // Replace with your local registry address
+        DOCKER_REGISTRY = "10.42.0.138:5000" // Replace with your local registry address
         IMAGE_NAME = "nodejs-app"           // Name of your Docker image
     }
 
