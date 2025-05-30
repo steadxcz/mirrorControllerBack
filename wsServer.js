@@ -22,18 +22,33 @@ class SocketServer {
       this.enablePing();
       ws.on("error", console.error);
       ws.on("message", (data) => {
+        console.log("Received message:", data.toString());
         const payload = JSON.parse(data.toString());
         this.devicesMap.set(payload.deviceId, ws);
         ws.send(`Successfully binded device ${payload.deviceId}`);
         MessageParser.routeMessage(payload.deviceId, payload.message);
       });
+      ws.on("close", () => {
+        console.log("Device disconnected");
+        // Remove the WebSocket from wsList
+        this.wsList = this.wsList.filter((client) => client !== ws);
+
+        // Optionally, remove the device from devicesMap
+        for (const [deviceId, clientWs] of this.devicesMap.entries()) {
+            if (clientWs === ws) {
+                this.devicesMap.delete(deviceId);
+                console.log(`Device ${deviceId} removed from devicesMap`);
+                break;
+            }
+        }
+    });
     });
   }
 
   enablePing() {
     this.pinger = setInterval(() => {
       this.wsList.forEach((ws) => {
-        ws.ping();
+        //ws.ping();
       });
     }, 1000);
   }
