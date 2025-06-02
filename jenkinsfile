@@ -2,7 +2,7 @@ pipeline {
     agent {
         kubernetes {
             label 'build-node'
-            defaultContainer 'jnlp'
+            defaultContainer 'docker'
             yaml """
 apiVersion: v1
 kind: Pod
@@ -15,24 +15,29 @@ spec:
     env:
     - name: DOCKER_TLS_CERTDIR
       value: ""
+    volumeMounts:
+    - name: docker-graph-storage
+      mountPath: /var/lib/docker
+    - name: cgroup
+      mountPath: /sys/fs/cgroup
     command:
     - dockerd
     args:
     - --host=tcp://0.0.0.0:2375
     - --host=unix:///var/run/docker.sock
     tty: true
-  - name: nodejs
-    image: node:20-alpine
-    command:
-    - cat
-    tty: true
+  volumes:
+  - name: docker-graph-storage
+    emptyDir: {}
+  - name: cgroup
+    hostPath:
+      path: /sys/fs/cgroup
 """
         }
     }
 
     environment {
-        DOCKER_HOST = "tcp://docker-daemon.jenkins.svc.cluster.local:2375" // Docker daemon service in the cluster
-        //DOCKER_HOST = "tcp://localhost:2375" // Docker daemon running in the container
+        DOCKER_HOST = "tcp://localhost:2375" // Docker daemon running in the container
         DOCKER_REGISTRY = "10.42.0.175:5000" // Replace with your local registry address
         IMAGE_NAME = "nodejs-app"           // Name of your Docker image
     }
@@ -43,16 +48,6 @@ spec:
                 echo 'Cloning the Node.js application from GitHub...'
                 git branch: 'dev',
                     url: 'https://github.com/steadxcz/mirrorControllerBack.git'
-            }
-        }
-
-        stage('Install Node.js and Git') {
-            steps {
-                container('docker') {
-                    sh '''
-                        apk add --no-cache nodejs npm git
-                    '''
-                }
             }
         }
 
