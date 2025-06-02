@@ -26,12 +26,11 @@ spec:
     - --host=tcp://0.0.0.0:2375
     - --host=unix:///var/run/docker.sock
     tty: true
-  volumes:
-  - name: docker-graph-storage
-    emptyDir: {}
-  - name: cgroup
-    hostPath:
-      path: /sys/fs/cgroup
+  - name: nodejs
+    image: node:20-alpine
+    command:
+    - cat
+    tty: true
 """
         }
     }
@@ -53,7 +52,7 @@ spec:
 
         stage('Install Dependencies') {
             steps {
-                container('docker') {
+                container('nodejs') {
                     echo 'Installing Node.js dependencies...'
                     sh 'npm install'
                 }
