@@ -35,9 +35,9 @@ spec:
         stage('Install Node.js and Git') {
             steps {
                 container('docker') {
-                    sh '''
+                    /*sh '''
                         apk add --no-cache nodejs npm git
-                    '''
+                    '''*/
                 }
             }
         }
