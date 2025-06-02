@@ -9,6 +9,19 @@ kind: Pod
 spec:
   containers:
   - name: docker
+    image: docker:19.03.12-dind
+    securityContext:
+      privileged: true
+    env:
+    - name: DOCKER_TLS_CERTDIR
+      value: ""
+    command:
+    - dockerd
+    args:
+    - --host=tcp://0.0.0.0:2375
+    - --host=unix:///var/run/docker.sock
+    tty: true
+  - name: nodejs
     image: node:20-alpine
     command:
     - cat
@@ -19,7 +32,8 @@ spec:
 
     environment {
         DOCKER_HOST = "tcp://docker-daemon.jenkins.svc.cluster.local:2375" // Docker daemon service in the cluster
-        DOCKER_REGISTRY = "local-registry.default.svc.cluster.local:5000" // Replace with your local registry address
+        //DOCKER_HOST = "tcp://localhost:2375" // Docker daemon running in the container
+        DOCKER_REGISTRY = "10.42.0.175:5000" // Replace with your local registry address
         IMAGE_NAME = "nodejs-app"           // Name of your Docker image
     }
 
@@ -35,9 +49,9 @@ spec:
         stage('Install Node.js and Git') {
             steps {
                 container('docker') {
-                    /*sh '''
+                    sh '''
                         apk add --no-cache nodejs npm git
-                    '''*/
+                    '''
                 }
             }
         }
